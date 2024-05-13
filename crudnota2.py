@@ -1,5 +1,7 @@
 import tkinter as tk
 
+dados = []
+
 # Função para criar o arquivo .txt
 def criar_arquivo():
     with open("dados.txt", "w") as arquivo:
@@ -49,11 +51,9 @@ janela.geometry("300x400")
 # Criando os campos de entrada
 entrada_nome = tk.Entry(janela)
 entrada_idade = tk.Entry(janela)
-entrada_sexo = tk.Entry(janela)
-entrada_matricula = tk.Entry(janela)
-entrada_nota1 = tk.Entry(janela)
-entrada_nota2 = tk.Entry(janela)
-entrada_nota3 = tk.Entry(janela)
+entrada_peso = tk.Entry(janela)
+entrada_altura = tk.Entry(janela)
+entrada_imc = tk.Entry(janela)
 
 # Criando os botões
 botao_criar = tk.Button(janela, text="Inserir", command=inserir_registro)
@@ -63,11 +63,8 @@ botao_excluir = tk.Button(janela, text="Excluir", command=excluir_registro)
 # Adicionando os campos de entrada e os botões à interface gráfica
 entrada_nome.grid(row=0, column=0)
 entrada_idade.grid(row=1, column=0)
-entrada_sexo.grid(row=2, column=0)
-entrada_matricula.grid(row=3, column=0)
-entrada_nota1.grid(row=4, column=0)
-entrada_nota2.grid(row=5, column=0)
-entrada_nota3.grid(row=6, column=0)
+entrada_peso.grid(row=1, column=0)
+entrada_altura.grid(row=1, column=0)
 botao_criar.grid(row=7, column=0)
 botao_ler.grid(row=8, column=0)
 botao_excluir.grid(row=10, column=0)
