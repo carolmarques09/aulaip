@@ -7,17 +7,20 @@ from tkinter import *
 dados = []
 
 # Inicializando a interface gráfica
-##criar_arquivo()
-janela = tk.Tk()
-janela.title("CRUD - IMC")
-janela.geometry("300x400")
+# Criando a janela (root) principal
+
+root = tk.Tk()
+root.geometry("300x400")
+root.title("Calculadora de IMC")
+root.configure(bg="black")
+fonte = ("Arial", 10)
 
 # Criando os campos de entrada
-entrada_nome = tk.Entry(janela)
-entrada_idade = tk.Entry(janela)
-entrada_peso = tk.Entry(janela)
-entrada_altura = tk.Entry(janela)
-entrada_imc = tk.Entry(janela)
+entrada_nome = tk.Entry(root)
+entrada_idade = tk.Entry(root)
+entrada_peso = tk.Entry(root)
+entrada_altura = tk.Entry(root)
+entrada_imc = tk.Entry(root)
 
 # Função para criar o arquivo .txt
 def criar_pessoa():
@@ -61,9 +64,9 @@ def exibir_pessoa():
 
 
 # Criando os botões
-botao_criar = tk.Button(janela, text="Inserir", command=inserir_pessoa)
-botao_ler = tk.Button(janela, text="Ler", command=exibir_pessoa)
-botao_excluir = tk.Button(janela, text="Excluir", command=excluir_pessoa)
+botao_criar = tk.Button(root, text="Inserir", command=inserir_pessoa)
+botao_ler = tk.Button(root, text="Ler", command=exibir_pessoa)
+botao_excluir = tk.Button(root, text="Excluir", command=excluir_pessoa)
 
 # Adicionando os campos de entrada e os botões à interface gráfica
 entrada_nome.grid(row=0, column=0)
@@ -109,19 +112,11 @@ def cadastrar_pessoa():
                                 f"\n Altura: {altura} m \n IMC : {imc:.2f}")
     classificacao_label.config(text=f"A classificação é: {classificacao}")
 
-# Cria a janela principal
-
-root = tk.Tk()
-root.geometry("300x400")
-root.title("Calculadora de IMC")
-root.configure(bg="black")
-fonte = ("Arial", 10)
-
 # Cria os widgets(Botoes)
-nome_label = ttk.Label(root, text="Nome:")
+nome_label = ttk.Label(root, text="Nome (Paciente):")
 nome_entry = ttk.Entry(root)
 
-idade_label = ttk.Label(root, text="Idade:")
+idade_label = ttk.Label(root, text="Idade (Anos):")
 idade_entry = ttk.Entry(root)
 
 peso_label = ttk.Label(root, text="Peso(kg):")
@@ -135,7 +130,7 @@ calcular_button = ttk.Button(root, text="Calcular IMC", command=cadastrar_pessoa
 resultado_label = ttk.Label(root, text="")
 classificacao_label = ttk.Label(root, text="")
 
-# Posiciona os widgets na janela(Local pra digitar os dados)
+# Posiciona os widgets na janela (ou também chamado de root, que é a janela principal) (Local pra digitar os dados)
 nome_label.grid(row=0, column=0, padx=10, pady=5)
 nome_entry.grid(row=0, column=1, padx=10, pady=5)
 
@@ -156,3 +151,12 @@ classificacao_label.grid(row=6, column=0, columnspan=2, pady=5)
 # Inicia o loop principal da interface grafica
 
 root.mainloop()
+
+
+
+
+
+
+
+
+
