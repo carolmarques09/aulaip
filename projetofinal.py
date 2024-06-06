@@ -1,8 +1,9 @@
-# Importacao das bibliotecas
+# Importação das bibliotecas
 
 import tkinter as tk
 from tkinter import ttk
-from tkinter import *
+
+# A variável dados foi colocada com dois colchetes pra ser validada
 
 dados = []
 
@@ -44,13 +45,14 @@ def inserir_pessoa():
 
 
 # Função para excluir um registro no arquivo .txt
-def excluir_pessoa():
+def excluir_pessoa(entrada_imc):
     imc = entrada_imc.get()
     dados = ler_pessoa()
     for i in range(len(dados)):
         linha = dados[i].strip()
         if linha.startswith(imc):
             del dados[i]
+            break # Para de procurar após encontrar e excluir o registro
     with open("dados.txt", "w") as arquivo:
         arquivo.writelines(dados)
 
@@ -62,22 +64,59 @@ def exibir_pessoa():
         if linha:
             print(linha)
 
+# Função para atualizar um registro no arquivo .txt
+def atualizar_pessoa():
+    nome = entrada_nome.get()
+    idade = entrada_idade.get()
+    peso = entrada_peso.get()
+    altura = entrada_altura.get()
+    if not nome or not idade or not peso or not altura:
+        print("As informações do usuário devem ser inseridas.")
+        return
+    dados = ler_pessoa()
+    for i in range(len(dados)):
+        linha = dados[i].strip()
+        if linha.startswith(entrada_imc):
+            dados[i] = f"{nome},{idade},{peso},{altura},{exibir_classificacao_imc}\n"
+    with open("dados.txt", "w") as arquivo:
+        arquivo.writelines(dados)
+
+# A função writelines serve para sobrescrever algo
+
+# Função principal para determinar a ação
+def main():
+    acao = input("Digite 'atualizar' para atualizar um registro ou 'excluir' para excluir um registro: ").strip().lower()
+    
+    if acao == 'atualizar':
+        entrada_nome = input("Digite o nome: ")
+        entrada_idade = input("Digite a idade: ")
+        entrada_peso = input("Digite o peso: ")
+        entrada_altura = input("Digite a altura: ")
+        entrada_imc = input("Digite o IMC: ")
+        atualizar_pessoa()    
+    elif acao == 'excluir':
+        entrada_imc = input("Digite o IMC: ")
+        excluir_pessoa(entrada_imc)    
+    else:
+        print("Ação inválida. Tente novamente.")
 
 # Criando os botões
 botao_criar = tk.Button(root, text="Inserir", command=inserir_pessoa)
 botao_ler = tk.Button(root, text="Ler", command=exibir_pessoa)
 botao_excluir = tk.Button(root, text="Excluir", command=excluir_pessoa)
+botao_atualizar = tk.Button(root, text="Atualizar", command=atualizar_pessoa)
 
 # Adicionando os campos de entrada e os botões à interface gráfica
-entrada_nome.grid(row=0, column=0)
+entrada_nome.grid(row=0, column=1)
 entrada_idade.grid(row=1, column=0)
 entrada_peso.grid(row=1, column=0)
 entrada_altura.grid(row=1, column=0)
 botao_criar.grid(row=7, column=0)
 botao_ler.grid(row=8, column=0)
-botao_excluir.grid(row=10, column=0)
+botao_excluir.grid(row=9, column=0)
+botao_atualizar.grid(row=10, column=0)
 
-# Definição da declaração das variaveis e das entradas dos dados
+# Definição da declaração das variáveis e das entradas dos dados
 
 def calcular_imc(peso, altura):
     imc = peso / (altura ** 2)
@@ -106,23 +145,23 @@ def cadastrar_pessoa():
     imc = calcular_imc(peso, altura)
     classificacao = exibir_classificacao_imc(imc)
 
-# Exibe o resultado das variaveis digitadas nos widgets
+# Exibe o resultado das variáveis digitadas nos widgets
 
     resultado_label.config(text=f" Nome: {nome} \n Idade: {idade} anos \n Peso: {peso} kg"
                                 f"\n Altura: {altura} m \n IMC : {imc:.2f}")
     classificacao_label.config(text=f"A classificação é: {classificacao}")
 
-# Cria os widgets(Botoes)
-nome_label = ttk.Label(root, text="Nome (Paciente):")
+# Cria os widgets (Botões)
+nome_label = ttk.Label(root, text="Nome (do Paciente):")
 nome_entry = ttk.Entry(root)
 
 idade_label = ttk.Label(root, text="Idade (Anos):")
 idade_entry = ttk.Entry(root)
 
-peso_label = ttk.Label(root, text="Peso(kg):")
+peso_label = ttk.Label(root, text="Peso (kg):")
 peso_entry = ttk.Entry(root)
 
-altura_label = ttk.Label(root, text="Altura(m):")
+altura_label = ttk.Label(root, text="Altura (m):")
 altura_entry = ttk.Entry(root)
 
 calcular_button = ttk.Button(root, text="Calcular IMC", command=cadastrar_pessoa)
@@ -152,7 +191,8 @@ classificacao_label.grid(row=6, column=0, columnspan=2, pady=5)
 
 root.mainloop()
 
-
+if __name__ == '__main__':
+    main()
 
 
 
